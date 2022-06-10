@@ -12,15 +12,14 @@ using BarberVic.Domain.Models;
 
 namespace BarberVic.Infrastructure.Contexts.BarberVic
 {
-    public class BarberVicDbContext : BaseDbContext, IBarberVicDbContext
+    public class BarberVicDbContext : DbContext, IBarberVicDbContext
     {
-        public BarberVicDbContext(DbContextOptions<BarberVicDbContext> options,
-            IOptions<AppSettings> appSettings)
-            : base(options, appSettings)
+        public BarberVicDbContext(DbContextOptions<BarberVicDbContext> options) : base(options)
         {
+
         }
 
-        public DbSet<User> User { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<T> GetDbSet<T>() where T : class, IBaseEntity => Set<T>();
 

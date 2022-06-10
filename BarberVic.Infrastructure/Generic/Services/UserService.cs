@@ -13,16 +13,31 @@ using BarberVic.Infrastructure.UnitOfWorks;
 
 namespace BarberVic.Application.Services
 {
-    public interface IUserServiceService : IEntityCRUDService<User, UserDto>
-    {
-        // Agregar mas metodo al servicio
-    }
 
-    public class UserService : EntityCRUDService<User, UserDto>, IUserServiceService
+    public class UserService : EntityCRUDService<User, UserDto>, IUserService
     {
-        public UserService(IMapper mapper, IUnitOfWork<IBarberVicDbContext> uow)
+        private readonly IUserRepository _userRepository;
+        public UserService(IMapper mapper, IUnitOfWork<IBarberVicDbContext> uow, IUserRepository userRepository)
             : base(mapper, uow)
         {
+            _userRepository = userRepository;
+        }
+        public User CreateUser(User user)
+        {
+            _userRepository.CreateUser(user);
+            return user;
+        }
+
+        public User DeleteUser(User user)
+        {
+            _userRepository.DeleteUser(user);
+            return user;
+        }
+        public List<User> GetAllUsers()
+        {
+            var users = _userRepository.GetAllUsers();
+
+            return users;
         }
     }
 }

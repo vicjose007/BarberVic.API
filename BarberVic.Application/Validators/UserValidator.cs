@@ -13,7 +13,7 @@ namespace BarberVic.Application.Validators
     {
         public UserValidator()
         {
-            RuleFor(x => x.NameDto).NotEmpty();
+            RuleFor(x => x.Name).NotEmpty();
         }
     }
 }
