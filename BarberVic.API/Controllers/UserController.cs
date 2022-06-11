@@ -77,6 +77,7 @@ namespace BarberVic.API.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Role, "Admin"),
                 new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Id)),
             };
 
@@ -113,7 +114,7 @@ namespace BarberVic.API.Controllers
             }
         }
 
-        [HttpGet, Authorize]
+        [HttpGet, Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> Get()
         {
             return Ok(await Context.Users.ToListAsync());
@@ -129,26 +130,32 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<User>>> AddUsers(User user)
+        public async Task<ActionResult<List<User>>> AddUsers(UserDto request)
         {
-            Context.Users.Add(user);
-            await Context.SaveChangesAsync();
+            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            return Ok(await Context.Users.ToListAsync());
+
+            user.Name = request.Name;
+            user.Password = request.Password;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
+            PostUser(user);
+
+            return Ok(user);
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<User>>> UpdateUsers(User request)
+        public async Task<ActionResult<List<User>>> UpdateUsers(UserDto request)
         {
             var user = await Context.Users.FindAsync(request.Id);
             if (user == null)
                 return BadRequest("User not found.");
 
+            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.Name = request.Name;
-            user.Email = request.Email;
             user.Password = request.Password;
-            user.Phone = request.Phone;
-            user.roles = request.roles;
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
 
 
             await Context.SaveChangesAsync();
