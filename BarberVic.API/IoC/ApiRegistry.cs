@@ -1,5 +1,7 @@
-﻿using BarberVic.Application.Services;
+﻿using BarberVic.Application.Common.Interfaces;
+using BarberVic.Application.Services;
 using BarberVic.Domain.Models;
+using BarberVic.Infrastructure.Generic.Services;
 using BarberVic.Infrastructure.Repositories;
 
 namespace BarberVic.API.IoC
@@ -10,6 +12,8 @@ namespace BarberVic.API.IoC
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddCors(x => x.AddPolicy("AllowAnyOrigin", x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
         }
 

@@ -1,4 +1,5 @@
-﻿using BarberVic.Application.Services;
+﻿using BarberVic.Application.Common.Interfaces;
+using BarberVic.Application.Services;
 using BarberVic.Domain.Entities;
 using BarberVic.Infrastructure.Contexts.BarberVic;
 using System;

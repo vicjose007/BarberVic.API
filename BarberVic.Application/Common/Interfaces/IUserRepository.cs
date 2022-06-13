@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BarberVic.Application.Services
+namespace BarberVic.Application.Common.Interfaces
 {
     public interface IUserRepository
     {

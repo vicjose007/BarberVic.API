@@ -26,6 +26,10 @@ namespace BarberVic.Domain.Entities
         [JsonIgnore]
         public byte[] PasswordSalt { get; set; }
 
+        //Relacion Uno a Muchos
+
+        public List<Appointment> Appointments { get; set; } 
+
 
     }
 }
