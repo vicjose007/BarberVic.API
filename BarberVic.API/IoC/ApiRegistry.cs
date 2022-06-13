@@ -14,6 +14,8 @@ namespace BarberVic.API.IoC
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IBarberService, BarberService>();
+            services.AddScoped<IBarberRepository, BarberRepository>();
             services.AddCors(x => x.AddPolicy("AllowAnyOrigin", x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
         }
 

@@ -7,16 +7,12 @@ using System.Threading.Tasks;
 
 namespace BarberVic.Application.Dtos
 {
-    public class AppointmentDto : BaseEntityDto
+    public class BarberDto : BaseEntityDto
     {
-        public int UserId { get; set; }
-
-        public int BarberId { get; set; }
-
         public string BarberName { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Experience { get; set; }
 
-        
+        public DateTime StartDate { get; set; }
     }
 }

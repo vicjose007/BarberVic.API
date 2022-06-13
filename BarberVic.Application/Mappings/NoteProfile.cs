@@ -11,6 +11,7 @@ namespace BarberVic.Application.Mappings
         {
             this._CreateMap_WithConventions_FromAssemblies<User, UserDto>();
             this._CreateMap_WithConventions_FromAssemblies<Appointment, AppointmentDto>();
+            this._CreateMap_WithConventions_FromAssemblies<Barber, BarberDto>();
         }
     }
 }

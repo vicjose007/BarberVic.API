@@ -11,8 +11,6 @@ namespace BarberVic.Domain.Entities
     public class Appointment : BaseEntity
     {
 
-        public string Barber { get; set; } = string.Empty;
-
         public DateTime Date { get; set; }
 
         //Relacion de Uno a Mucho
@@ -20,6 +18,15 @@ namespace BarberVic.Domain.Entities
         public User User { get; set; }
 
         public int UserId { get; set; }
+
+
+        //Relacion de Uno a Mucho
+        [JsonIgnore]
+        public Barber Barber { get; set; }
+
+        public int BarberId { get; set; }
+
+        public string BarberName { get; set; }
 
 
     }

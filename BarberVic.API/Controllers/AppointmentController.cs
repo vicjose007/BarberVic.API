@@ -55,7 +55,8 @@ namespace BarberVic.API.Controllers
             var newAppointment = new Appointment
             {
                 User = user,
-                Barber = request.Barber,
+                BarberId = request.BarberId,
+                BarberName = request.BarberName,
                 Date = request.Date,
 
 
@@ -81,7 +82,8 @@ namespace BarberVic.API.Controllers
                 return BadRequest("Appointment not found.");
 
             appointment.UserId = request.UserId;
-            appointment.Barber = request.Barber;
+            appointment.BarberId = request.BarberId;
+            appointment.BarberName = request.BarberName;
             appointment.Date = request.Date;
 
 

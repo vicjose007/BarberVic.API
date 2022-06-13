@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarberVic.API.Migrations
 {
     [DbContext(typeof(BarberVicDbContext))]
-    [Migration("20220612235538_InitialMigration")]
+    [Migration("20220613071511_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,10 @@ namespace BarberVic.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Barber")
+                    b.Property<int>("BarberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BarberName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -59,9 +62,50 @@ namespace BarberVic.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BarberId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("BarberVic.Domain.Entities.Barber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("BarberName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Experience")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Barbers");
                 });
 
             modelBuilder.Entity("BarberVic.Domain.Entities.User", b =>
@@ -125,13 +169,26 @@ namespace BarberVic.API.Migrations
 
             modelBuilder.Entity("BarberVic.Domain.Entities.Appointment", b =>
                 {
+                    b.HasOne("BarberVic.Domain.Entities.Barber", "Barber")
+                        .WithMany("Appointments")
+                        .HasForeignKey("BarberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("BarberVic.Domain.Entities.User", "User")
                         .WithMany("Appointments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Barber");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BarberVic.Domain.Entities.Barber", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("BarberVic.Domain.Entities.User", b =>
