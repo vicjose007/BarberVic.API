@@ -27,6 +27,8 @@ namespace BarberVic.Infrastructure.Contexts.BarberVic
 
         public DbSet<Haircut> Haircuts { get; set; }
 
+        public DbSet<Invoice> Invoices { get; set; }
+
         public DbSet<T> GetDbSet<T>() where T : class, IBaseEntity => Set<T>();
 
         ChangeTracker IBarberVicDbContext.ChangeTracker()
