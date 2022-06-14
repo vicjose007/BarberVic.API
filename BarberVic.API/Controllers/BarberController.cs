@@ -18,16 +18,18 @@ namespace BarberVic.API.Controllers
         private readonly IConfiguration _configuration;
         private readonly IBarberService _service;
         private readonly IHttpContextAccessor _accesor;
+        private readonly IImageService _imageService;
         private readonly BarberVicDbContext Context;
 
 
 
-        public BarberController(IConfiguration configuration, IBarberService service, IHttpContextAccessor accessor, BarberVicDbContext dataContext)
+        public BarberController(IConfiguration configuration, IBarberService service, IHttpContextAccessor accessor, BarberVicDbContext dataContext, IImageService img)
         {
             Context = dataContext;
             _configuration = configuration;
             _service = service;
             _accesor = accessor;
+            _imageService = img;
 
         }
         [HttpGet, Authorize(Roles = "Admin")]
@@ -46,10 +48,11 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Barber>>> AddBarbers(BarberDto request)
+        public async Task<ActionResult<List<Barber>>> AddBarbers([FromForm] BarberDto request)
         {
 
             barber.BarberName = request.BarberName;
+            barber.BarberPhoto = await _imageService.Upload(request.BarberPhoto);
             barber.Experience = request.Experience;
             barber.StartDate = request.StartDate;
 
@@ -66,7 +69,7 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Barber>>> UpdateBarbers(BarberDto request)
+        public async Task<ActionResult<List<Barber>>> UpdateBarbers([FromForm] BarberDto request)
         {
             var barber = await Context.Barbers.FindAsync(request.Id);
             if (barber == null)
@@ -74,6 +77,7 @@ namespace BarberVic.API.Controllers
 
 
             barber.BarberName = request.BarberName;
+            barber.BarberPhoto = await _imageService.Upload(request.BarberPhoto);
             barber.Experience = request.Experience;
             barber.StartDate = request.StartDate;
 

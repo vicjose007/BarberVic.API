@@ -133,7 +133,7 @@ namespace BarberVic.API.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> AddUsers(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -144,6 +144,7 @@ namespace BarberVic.API.Controllers
             user.Password = request.Password;
             user.Email = request.Email;
             user.Phone = request.Phone;
+            user.roles = request.roles;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             PostUser(user);

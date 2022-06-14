@@ -1,4 +1,5 @@
 ﻿using BarberVic.Domain.BaseModel.BaseEntityDto;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace BarberVic.Application.Dtos
         public string Experience { get; set; }
 
         public DateTime StartDate { get; set; }
+
+        public IFormFile BarberPhoto { get; set; }
     }
 }

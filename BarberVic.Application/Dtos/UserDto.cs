@@ -22,5 +22,8 @@ namespace BarberVic.Application.Dtos
         public string Password { get; set; }
 
         public string Phone { get; set; } = string.Empty;
+
+        public Roles roles { get; set; }
+
     }
 }
