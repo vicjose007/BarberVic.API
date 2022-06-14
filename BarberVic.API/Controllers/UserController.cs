@@ -42,7 +42,10 @@ namespace BarberVic.API.Controllers
 
 
             user.Name = request.Name;
+            user.LastName = request.LastName;   
             user.Password = request.Password;
+            user.Email = request.Email;
+            user.Phone = request.Phone;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             PostUser(user);
@@ -58,7 +61,7 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<string>> Login(UserDto request)
+        public async Task<ActionResult<string>> Login(LoginDto request)
         {
             var userFind = _service.GetAllUsers().Where(x => x.Name == request.Name && x.Password == request.Password).FirstOrDefault();
             if (userFind is null)
@@ -78,7 +81,7 @@ namespace BarberVic.API.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Role, "Admin"),
+                new Claim(ClaimTypes.Role, user.roles.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Id)),
             };
 
@@ -137,7 +140,10 @@ namespace BarberVic.API.Controllers
 
 
             user.Name = request.Name;
+            user.LastName = request.LastName;
             user.Password = request.Password;
+            user.Email = request.Email;
+            user.Phone = request.Phone;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
             PostUser(user);
@@ -154,7 +160,10 @@ namespace BarberVic.API.Controllers
 
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
             user.Name = request.Name;
+            user.LastName = request.LastName;
             user.Password = request.Password;
+            user.Email = request.Email;
+            user.Phone = request.Phone;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 

@@ -10,7 +10,7 @@ namespace BarberVic.Domain.Enum
     {
         Admin,
         Client,
-        Barber
+        Barber,
 
     }
 }
