@@ -30,6 +30,25 @@ namespace BarberVic.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Haircuts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HaircutName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Haircuts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -64,6 +83,7 @@ namespace BarberVic.API.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     BarberId = table.Column<int>(type: "int", nullable: false),
                     BarberName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HaircutId = table.Column<int>(type: "int", nullable: false),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -80,6 +100,12 @@ namespace BarberVic.API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_Appointments_Haircuts_HaircutId",
+                        column: x => x.HaircutId,
+                        principalTable: "Haircuts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Appointments_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
@@ -91,6 +117,11 @@ namespace BarberVic.API.Migrations
                 name: "IX_Appointments_BarberId",
                 table: "Appointments",
                 column: "BarberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Appointments_HaircutId",
+                table: "Appointments",
+                column: "HaircutId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_UserId",
@@ -105,6 +136,9 @@ namespace BarberVic.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Barbers");
+
+            migrationBuilder.DropTable(
+                name: "Haircuts");
 
             migrationBuilder.DropTable(
                 name: "Users");

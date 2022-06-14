@@ -14,19 +14,25 @@ namespace BarberVic.Domain.Entities
         public DateTime Date { get; set; }
 
         //Relacion de Uno a Mucho
-        [JsonIgnore]
+
         public User User { get; set; }
 
         public int UserId { get; set; }
 
 
         //Relacion de Uno a Mucho
-        [JsonIgnore]
+
         public Barber Barber { get; set; }
 
         public int BarberId { get; set; }
 
         public string BarberName { get; set; }
+
+        //Relacion de Uno a Mucho
+
+        public Haircut Haircut { get; set; }
+
+        public int HaircutId { get; set; }
 
 
     }

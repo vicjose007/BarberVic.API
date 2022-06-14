@@ -56,6 +56,7 @@ namespace BarberVic.API.Controllers
             {
                 User = user,
                 BarberId = request.BarberId,
+                HaircutId = request.HaircutId,
                 BarberName = request.BarberName,
                 Date = request.Date,
 
@@ -83,6 +84,7 @@ namespace BarberVic.API.Controllers
 
             appointment.UserId = request.UserId;
             appointment.BarberId = request.BarberId;
+            appointment.HaircutId = request.HaircutId;
             appointment.BarberName = request.BarberName;
             appointment.Date = request.Date;
 
