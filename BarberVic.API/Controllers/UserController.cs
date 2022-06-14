@@ -165,6 +165,7 @@ namespace BarberVic.API.Controllers
             user.Password = request.Password;
             user.Email = request.Email;
             user.Phone = request.Phone;
+            user.roles = request.roles;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 

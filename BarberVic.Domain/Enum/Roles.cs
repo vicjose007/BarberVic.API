@@ -8,9 +8,9 @@ namespace BarberVic.Domain.Enum
 {
     public enum Roles
     {
-        Admin,
         Client,
         Barber,
+        Admin,   
 
     }
 }
