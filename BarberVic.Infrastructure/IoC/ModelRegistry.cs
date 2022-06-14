@@ -15,6 +15,7 @@ namespace BarberVic.Infrastructure.IoC
         {
             services.AddTransient<IBarberVicDbContext, BarberVicDbContext>();
             services.AddScoped<IUnitOfWork<IBarberVicDbContext>, BarberVicUnitOfWork>();
+    
         }
     }
 }

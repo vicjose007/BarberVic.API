@@ -20,6 +20,7 @@ namespace BarberVic.API.IoC
             services.AddScoped<IHaircutRepository, HaircutRepository>();
             services.AddScoped<IInvoiceService, InvoiceService>();
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<IImageService, ImageServices>();
             services.AddCors(x => x.AddPolicy("AllowAnyOrigin", x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()));
         }
 

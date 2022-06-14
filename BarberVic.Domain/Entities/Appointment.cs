@@ -34,7 +34,7 @@ namespace BarberVic.Domain.Entities
 
         public int HaircutId { get; set; }
 
-        //Relacion de Uno a Mucho
+        //Relacion de Uno a Uno
 
         public Invoice Invoice { get; set; }
 

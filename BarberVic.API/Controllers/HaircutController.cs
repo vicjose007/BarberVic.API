@@ -18,16 +18,18 @@ namespace BarberVic.API.Controllers
         private readonly IConfiguration _configuration;
         private readonly IHaircutService _service;
         private readonly IHttpContextAccessor _accesor;
+        private readonly IImageService _imageService;
         private readonly BarberVicDbContext Context;
 
 
 
-        public HaircutController(IConfiguration configuration, IHaircutService service, IHttpContextAccessor accessor, BarberVicDbContext dataContext)
+        public HaircutController(IConfiguration configuration, IHaircutService service, IHttpContextAccessor accessor, BarberVicDbContext dataContext, IImageService img)
         {
             Context = dataContext;
             _configuration = configuration;
             _service = service;
             _accesor = accessor;
+            _imageService = img;
 
         }
         [HttpGet, Authorize(Roles = "Admin")]
@@ -46,10 +48,11 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Haircut>>> AddHaircuts(HaircutDto request)
+        public async Task<ActionResult<List<Haircut>>> AddHaircuts([FromForm]HaircutDto request)
         {
-
+        
             haircut.HaircutName = request.HaircutName;
+            haircut.Photo = await _imageService.Upload(request.Photo);
             haircut.Price = request.Price;
 
             PostHaircut(haircut);
@@ -65,15 +68,16 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Haircut>>> UpdateHaircuts(HaircutDto request)
+        public async Task<ActionResult<List<Haircut>>> UpdateHaircuts([FromForm] HaircutDto request)
         {
             var haircut = await Context.Haircuts.FindAsync(request.Id);
             if (haircut == null)
                 return BadRequest("Haircut not found.");
 
             haircut.HaircutName = request.HaircutName;
+            haircut.Photo = await _imageService.Upload(request.Photo);
             haircut.Price = request.Price;
-  
+
 
 
             await Context.SaveChangesAsync();

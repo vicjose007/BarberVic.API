@@ -4,6 +4,7 @@ using BarberVic.Infrastructure.Contexts.BarberVic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BarberVic.API.Migrations
 {
     [DbContext(typeof(BarberVicDbContext))]
-    partial class BarberVicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220614180013_Photo")]
+    partial class Photo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

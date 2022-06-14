@@ -1,4 +1,5 @@
 ﻿using BarberVic.Domain.BaseModel.BaseEntityDto;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace BarberVic.Application.Dtos
         public string HaircutName { get; set; }
 
         public float Price { get; set; }
+        public IFormFile Photo { get; set; }
     }
 }

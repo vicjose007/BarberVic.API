@@ -16,14 +16,18 @@ namespace BarberVic.Infrastructure.Generic.Services
     public class HaircutService : EntityCRUDService<Haircut, HaircutDto>, IHaircutService
     {
         private readonly IHaircutRepository _haircutRepository;
+        
         public HaircutService(IMapper mapper, IUnitOfWork<IBarberVicDbContext> uow, IHaircutRepository haircutRepository)
             : base(mapper, uow)
         {
             _haircutRepository = haircutRepository;
+            
         }
         public Haircut CreateHaircut(Haircut haircut)
         {
+            
             _haircutRepository.CreateHaircut(haircut);
+
             return haircut;
         }
 

@@ -13,6 +13,7 @@ namespace BarberVic.Domain.Entities
         public string HaircutName { get; set; }
 
         public float Price { get; set; }
+        public string Photo { get; set; }
 
         //Relacion Uno a Muchos
 
