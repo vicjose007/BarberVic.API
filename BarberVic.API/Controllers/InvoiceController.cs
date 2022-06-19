@@ -74,10 +74,10 @@ namespace BarberVic.API.Controllers
             return invoiceFromService;
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<Invoice>>> UpdateInvoices(InvoiceDto request)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<Invoice>>> UpdateInvoices(int id,InvoiceDto request)
         {
-            var invoice = await Context.Invoices.FindAsync(request.Id);
+            var invoice = await Context.Invoices.FindAsync(id);
             if (invoice == null)
                 return BadRequest("Invoice not found.");
 

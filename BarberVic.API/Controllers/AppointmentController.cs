@@ -75,10 +75,10 @@ namespace BarberVic.API.Controllers
             return appointmentFromService;
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<Appointment>>> UpdateAppointments(AppointmentDto request)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<Appointment>>> UpdateAppointments(int id,AppointmentDto request)
         {
-            var appointment = await Context.Appointments.FindAsync(request.Id);
+            var appointment = await Context.Appointments.FindAsync(id);
             if (appointment == null)
                 return BadRequest("Appointment not found.");
 

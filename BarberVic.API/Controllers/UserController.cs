@@ -63,7 +63,7 @@ namespace BarberVic.API.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<string>> Login(LoginDto request)
         {
-            var userFind = _service.GetAllUsers().Where(x => x.Name == request.Name && x.Password == request.Password).FirstOrDefault();
+            var userFind = _service.GetAllUsers().Where(x => x.Email == request.Email && x.Password == request.Password).FirstOrDefault();
             if (userFind is null)
             {
                 return BadRequest("User not found.");
@@ -118,7 +118,7 @@ namespace BarberVic.API.Controllers
             }
         }
 
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
             return Ok(await Context.Users.ToListAsync());
@@ -133,7 +133,7 @@ namespace BarberVic.API.Controllers
             return Ok(user);
         }
 
-        [HttpPost, Authorize(Roles = "Admin")]
+        [HttpPost]
         public async Task<ActionResult<List<User>>> AddUsers(UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -152,10 +152,11 @@ namespace BarberVic.API.Controllers
             return Ok(user);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<User>>> UpdateUsers(UserDto request)
+ 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<User>>> UpdateUsers(int id, UserDto request)
         {
-            var user = await Context.Users.FindAsync(request.Id);
+            var user = await Context.Users.FindAsync(id);
             if (user == null)
                 return BadRequest("User not found.");
 

@@ -32,7 +32,7 @@ namespace BarberVic.API.Controllers
             _imageService = img;
 
         }
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<ActionResult<List<Barber>>> Get()
         {
             return Ok(await Context.Barbers.ToListAsync());
@@ -68,10 +68,10 @@ namespace BarberVic.API.Controllers
             return barberFromService;
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<Barber>>> UpdateBarbers([FromForm] BarberDto request)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<Barber>>> UpdateBarbers(int id, [FromForm] BarberDto request)
         {
-            var barber = await Context.Barbers.FindAsync(request.Id);
+            var barber = await Context.Barbers.FindAsync(id);
             if (barber == null)
                 return BadRequest("Barber not found.");
 

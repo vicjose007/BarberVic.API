@@ -67,10 +67,10 @@ namespace BarberVic.API.Controllers
             return haircutFromService;
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<Haircut>>> UpdateHaircuts([FromForm] HaircutDto request)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<Haircut>>> UpdateHaircuts(int id, [FromForm]HaircutDto request)
         {
-            var haircut = await Context.Haircuts.FindAsync(request.Id);
+            var haircut = await Context.Haircuts.FindAsync(id);
             if (haircut == null)
                 return BadRequest("Haircut not found.");
 
