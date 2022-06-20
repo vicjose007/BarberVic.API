@@ -46,7 +46,7 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Invoice>>> AddInvoices(InvoiceDto request)
+        public async Task<ActionResult<List<Invoice>>> AddInvoices([FromForm] InvoiceDto request)
         {
             var appointment = await Context.Appointments.FindAsync(request.AppointmentId);
             if (appointment == null)
@@ -75,7 +75,7 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<List<Invoice>>> UpdateInvoices(int id,InvoiceDto request)
+        public async Task<ActionResult<List<Invoice>>> UpdateInvoices(int id, [FromForm] InvoiceDto request)
         {
             var invoice = await Context.Invoices.FindAsync(id);
             if (invoice == null)

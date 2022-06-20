@@ -36,7 +36,7 @@ namespace BarberVic.API.Controllers
 
         }
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(UserDto request)
+        public async Task<ActionResult<User>> Register([FromForm] UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
@@ -61,7 +61,7 @@ namespace BarberVic.API.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<string>> Login(LoginDto request)
+        public async Task<ActionResult<string>> Login([FromForm] LoginDto request)
         {
             var userFind = _service.GetAllUsers().Where(x => x.Email == request.Email && x.Password == request.Password).FirstOrDefault();
             if (userFind is null)
@@ -118,7 +118,7 @@ namespace BarberVic.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet,Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> Get()
         {
             return Ok(await Context.Users.ToListAsync());
@@ -133,8 +133,8 @@ namespace BarberVic.API.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<List<User>>> AddUsers(UserDto request)
+        [HttpPost, Authorize(Roles = "Admin")]
+        public async Task<ActionResult<List<User>>> AddUsers([FromForm] UserDto request)
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
@@ -153,8 +153,8 @@ namespace BarberVic.API.Controllers
         }
 
  
-        [HttpPut("{id}")]
-        public async Task<ActionResult<List<User>>> UpdateUsers(int id, UserDto request)
+        [HttpPut("{id}"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<List<User>>> UpdateUsers(int id, [FromForm]  UserDto request)
         {
             var user = await Context.Users.FindAsync(id);
             if (user == null)
@@ -176,7 +176,7 @@ namespace BarberVic.API.Controllers
             return Ok(await Context.Users.ToListAsync());
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> Delete(int id)
         {
             var user = await Context.Users.FindAsync(id);
