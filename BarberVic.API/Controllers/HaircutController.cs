@@ -47,7 +47,7 @@ namespace BarberVic.API.Controllers
             return Ok(haircut);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Haircut>>> AddHaircuts([FromForm]HaircutDto request)
         {
         
@@ -67,7 +67,7 @@ namespace BarberVic.API.Controllers
             return haircutFromService;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Haircut>>> UpdateHaircuts(int id, [FromForm]HaircutDto request)
         {
             var haircut = await Context.Haircuts.FindAsync(id);
@@ -85,7 +85,7 @@ namespace BarberVic.API.Controllers
             return Ok(await Context.Haircuts.ToListAsync());
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Haircut>>> Delete(int id)
         {
             var haircut = await Context.Haircuts.FindAsync(id);
