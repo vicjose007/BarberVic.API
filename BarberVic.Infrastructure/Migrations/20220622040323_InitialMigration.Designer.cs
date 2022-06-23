@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BarberVic.API.Migrations
+namespace BarberVic.Infrastructure.Migrations
 {
     [DbContext(typeof(BarberVicDbContext))]
-    [Migration("20220614052529_InvoiceRelationship")]
-    partial class InvoiceRelationship
+    [Migration("20220622040323_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,10 +34,6 @@ namespace BarberVic.API.Migrations
 
                     b.Property<int>("BarberId")
                         .HasColumnType("int");
-
-                    b.Property<string>("BarberName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -86,6 +82,10 @@ namespace BarberVic.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("BarberPhoto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
@@ -131,6 +131,10 @@ namespace BarberVic.API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("HaircutName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Photo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

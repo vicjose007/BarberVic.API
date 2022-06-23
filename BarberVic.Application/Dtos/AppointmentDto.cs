@@ -15,8 +15,6 @@ namespace BarberVic.Application.Dtos
 
         public int HaircutId { get; set; }
 
-        public string BarberName { get; set; }
-
         public DateTime Date { get; set; }
 
         

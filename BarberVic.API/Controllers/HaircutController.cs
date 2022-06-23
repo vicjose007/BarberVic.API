@@ -32,7 +32,7 @@ namespace BarberVic.API.Controllers
             _imageService = img;
 
         }
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<ActionResult<List<Haircut>>> Get()
         {
             return Ok(await Context.Haircuts.ToListAsync());

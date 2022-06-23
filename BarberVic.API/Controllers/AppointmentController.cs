@@ -30,10 +30,13 @@ namespace BarberVic.API.Controllers
             _accesor = accessor;
 
         }
-        [HttpGet, Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<ActionResult<List<Appointment>>> Get()
         {
-            return Ok(await Context.Appointments.ToListAsync());
+            return Ok(await Context.Appointments
+                .Include(c => c.User)
+                .Include(c => c.Barber)
+                .Include(c => c.Haircut).ToListAsync());
         }
 
         [HttpGet("{id}")]
@@ -57,7 +60,6 @@ namespace BarberVic.API.Controllers
                 User = user,
                 BarberId = request.BarberId,
                 HaircutId = request.HaircutId,
-                BarberName = request.BarberName,
                 Date = request.Date,
 
 
@@ -85,7 +87,6 @@ namespace BarberVic.API.Controllers
             appointment.UserId = request.UserId;
             appointment.BarberId = request.BarberId;
             appointment.HaircutId = request.HaircutId;
-            appointment.BarberName = request.BarberName;
             appointment.Date = request.Date;
 
 

@@ -118,7 +118,7 @@ namespace BarberVic.API.Controllers
             }
         }
 
-        [HttpGet,Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
             return Ok(await Context.Users.ToListAsync());

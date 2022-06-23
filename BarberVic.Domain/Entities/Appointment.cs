@@ -26,7 +26,6 @@ namespace BarberVic.Domain.Entities
 
         public int BarberId { get; set; }
 
-        public string BarberName { get; set; }
 
         //Relacion de Uno a Mucho
 

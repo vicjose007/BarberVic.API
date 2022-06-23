@@ -4,18 +4,16 @@ using BarberVic.Infrastructure.Contexts.BarberVic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BarberVic.API.Migrations
+namespace BarberVic.Infrastructure.Migrations
 {
     [DbContext(typeof(BarberVicDbContext))]
-    [Migration("20220613232417_InitialMigration")]
-    partial class InitialMigration
+    partial class BarberVicDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,10 +32,6 @@ namespace BarberVic.API.Migrations
 
                     b.Property<int>("BarberId")
                         .HasColumnType("int");
-
-                    b.Property<string>("BarberName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -83,6 +77,10 @@ namespace BarberVic.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("BarberName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BarberPhoto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -134,6 +132,10 @@ namespace BarberVic.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -146,6 +148,50 @@ namespace BarberVic.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Haircuts");
+                });
+
+            modelBuilder.Entity("BarberVic.Domain.Entities.Invoice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("CreatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("Total")
+                        .HasColumnType("real");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdatedDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId")
+                        .IsUnique();
+
+                    b.ToTable("Invoices");
                 });
 
             modelBuilder.Entity("BarberVic.Domain.Entities.User", b =>
@@ -232,6 +278,23 @@ namespace BarberVic.API.Migrations
                     b.Navigation("Haircut");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BarberVic.Domain.Entities.Invoice", b =>
+                {
+                    b.HasOne("BarberVic.Domain.Entities.Appointment", "Appointment")
+                        .WithOne("Invoice")
+                        .HasForeignKey("BarberVic.Domain.Entities.Invoice", "AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+                });
+
+            modelBuilder.Entity("BarberVic.Domain.Entities.Appointment", b =>
+                {
+                    b.Navigation("Invoice")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BarberVic.Domain.Entities.Barber", b =>

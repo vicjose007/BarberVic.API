@@ -25,7 +25,7 @@ builder.Services.AddDomainRegistry();
 
 
 builder.Services.AddDbContext<BarberVicDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-b => b.MigrationsAssembly("BarberVic.API")));
+b => b.MigrationsAssembly("BarberVic.Infrastructure")));
 
 builder.Services.AddControllers(options =>
 {
